@@ -2,7 +2,7 @@ import { Canvas, useThree, useFrame, addEffect } from "@react-three/fiber"
 import { useEffect, useRef, useState, Suspense } from "react"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/Addons.js"
-import { Html } from "@react-three/drei"
+import QHtml from "./QHtml"
 
 const d4 = 2
 
@@ -52,7 +52,7 @@ function Line({ start, end, color="#0FF" }) {
   return <line geometry={geometry} material={material} />
 }
 
-function HyperCube({ position = [0,0,0], scale = [1,1,1]}){
+function HyperCube({ position = [0,0,0], sv = [1,1,1]}){
   const origin = useRef([
     [[0,0,0,0],[0,0,0,1],[0,0,1,0],[0,0,1,1]],
     [[0,1,0,0],[0,1,0,1],[0,1,1,0],[0,1,1,1]],
@@ -62,7 +62,7 @@ function HyperCube({ position = [0,0,0], scale = [1,1,1]}){
 
   const [hyper_points, setHyper_Points] = useState(origin.current)
   useFrame((state, delta) => {
-    const angle = 0.1 * state.clock.getElapsedTime()
+    const angle = 0.0 * state.clock.getElapsedTime()
     setHyper_Points(origin.current.map((layer) =>
       layer.map((point) => {
         const [x, y, z, w] = point
@@ -74,13 +74,13 @@ function HyperCube({ position = [0,0,0], scale = [1,1,1]}){
         
         const scale = 1 / (2 - newW)
         
-        return [newX * scale , newY * scale, newZ * scale, newW]
+        return [newX * scale + position[0], newY * scale + position[1], newZ * scale + position[2], newW]
       })
     ))
   })
 
   const mappedPoints = map3(hyper_points).flat().map((rw) => {return rw.map((n, index) => {return n * sv[index]})})
-  return <group position={new THREE.Vector3(...position)} scale={(new THREE.Vector3(...scale))}>
+  return <group>
   {mappedPoints.map((coords: any, index:any, arr:any) => (
     <Point key={index} position={coords} size={Math.sqrt(1) / 25} color={`rgb(${Math.round((arr.length - index) / arr.length * 255) * (index % 2)}, ${Math.round(index / arr.length * 255)}, ${Math.round((arr.length - index) / arr.length * 255) * ((index + 1) % 2)})`}/>
   ))}
@@ -117,118 +117,12 @@ function HyperCube({ position = [0,0,0], scale = [1,1,1]}){
   <Line start={mappedPoints[9]} end={mappedPoints[13]}/>
   <Line start={mappedPoints[11]} end={mappedPoints[3]}/>
 
-  <QuadHTML points={[mappedPoints[0], mappedPoints[1], mappedPoints[4], mappedPoints[8]]}>
-      <div style={{ width: '100%', height: '100%', background: 'white', padding: '20px' }}>
-        <h1>Hunnit band hunnit band</h1>
-        <p>This content will fit the quad!</p>
+  <QHtml points={[mappedPoints[0], mappedPoints[4], mappedPoints[12], mappedPoints[8]]}>
+      <div style={{ width: "100%", height: "100%", background: "white", padding: "20px" }}>
+        <p>Hello World</p>
       </div>
-    </QuadHTML>
+    </QHtml>
   </group>
-}
-
-function QuadHTML({ points, children }) {
-  const htmlRef = useRef()
-  
-  useEffect(() => {
-    if (!htmlRef.current) return
-    
-    
-    const [topLeft, topRight, bottomLeft, bottomRight] = points
-    
-    
-    
-    const transform = getPerspectiveTransform(
-      
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
-      { x: 0, y: 1 },
-      { x: 1, y: 1 },
-      
-      { x: topLeft[0], y: topLeft[1] },
-      { x: topRight[0], y: topRight[1] },
-      { x: bottomLeft[0], y: bottomLeft[1] },
-      { x: bottomRight[0], y: bottomRight[1] }
-    )
-    
-    
-    htmlRef.current.style.transform = `matrix3d(${transform.join(',')})`
-  }, [points])
-
-  return (
-    <Html
-      ref={htmlRef}
-      transform
-      style={{
-        transformOrigin: '0 0',
-        width: '100%',
-        height: '100%'
-      }}
-    >
-      {children}
-    </Html>
-  )
-}
-
-
-function getPerspectiveTransform(
-  src0, src1, src2, src3,
-  dst0, dst1, dst2, dst3
-) {
-  
-  const [a, b, c, d, e, f, g, h] = computeProjectiveCoefficients(
-    src0, src1, src2, src3,
-    dst0, dst1, dst2, dst3
-  )
-  
-  
-  return [
-    a, b, 0, 0,
-    c, d, 0, 0,
-    0, 0, 1, 0,
-    e, f, 0, 1
-  ]
-}
-
-function computeProjectiveCoefficients(src0, src1, src2, src3, dst0, dst1, dst2, dst3) {
-  
-  
-  const x0 = src0.x, y0 = src0.y,
-        x1 = src1.x, y1 = src1.y,
-        x2 = src2.x, y2 = src2.y,
-        x3 = src3.x, y3 = src3.y
-
-  const X0 = dst0.x, Y0 = dst0.y,
-        X1 = dst1.x, Y1 = dst1.y,
-        X2 = dst2.x, Y2 = dst2.y,
-        X3 = dst3.x, Y3 = dst3.y
-
-  
-  const matA = [
-    [x0, y0, 1, 0, 0, 0, -X0*x0, -X0*y0],
-    [0, 0, 0, x0, y0, 1, -Y0*x0, -Y0*y0],
-    [x1, y1, 1, 0, 0, 0, -X1*x1, -X1*y1],
-    [0, 0, 0, x1, y1, 1, -Y1*x1, -Y1*y1],
-    [x2, y2, 1, 0, 0, 0, -X2*x2, -X2*y2],
-    [0, 0, 0, x2, y2, 1, -Y2*x2, -Y2*y2],
-    [x3, y3, 1, 0, 0, 0, -X3*x3, -X3*y3],
-    [0, 0, 0, x3, y3, 1, -Y3*x3, -Y3*y3]
-  ]
-
-  const matB = [X0, Y0, X1, Y1, X2, Y2, X3, Y3]
-
-  
-  
-  const solution = solveMatrix(matA, matB)
-  
-  return solution
-}
-
-
-function solveMatrix(A, b) {
-  
-  
-  
-  return [...Array(8)].map((_, i) => i < b.length ? b[i] : 0)
 }
 
 function CameraController() {
@@ -271,13 +165,14 @@ function App() {
   
   return (
     <div className="w-full h-screen">
+      <p className="absolute z-50 bg-neutral-300 md">This is a hypercube! <a href="https://github.com/chris2rich">Github</a></p>
       <Suspense>
       <Canvas camera={{ position: [3, 3, 3], fov: 75 }} style={{ background: "#212121" }} frameloop={"demand"}>
         <FrameLimit fps={30} />
         <CameraController />
         <ambientLight intensity={0.25} />
         <pointLight position={[10, 10, 10]} />
-        <HyperCube scale={[5,5,5]} position={[.5,.5,.5]}/>
+        <HyperCube sv={[10,10,10]} position={[.5,.5,.5]}/>
       </Canvas>
       </Suspense>
     </div>
