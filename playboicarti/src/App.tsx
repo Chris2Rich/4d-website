@@ -1,5 +1,5 @@
 import { Canvas, useThree, useFrame, addEffect } from "@react-three/fiber"
-import { useEffect, useRef, useState, Suspense } from "react"
+import React, { useEffect, useRef, useState, Suspense } from "react"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/Addons.js"
 import QHtml from "./QHtml"
@@ -52,7 +52,7 @@ function Line({ start, end, color="#0FF" }) {
   return <line geometry={geometry} material={material} />
 }
 
-function HyperCube({ position = [0,0,0], sv = [1,1,1]}){
+function HyperCube({ position = [0,0,0], sv = [1,1,1], rt}){
   const origin = useRef([
     [[0,0,0,0],[0,0,0,1],[0,0,1,0],[0,0,1,1]],
     [[0,1,0,0],[0,1,0,1],[0,1,1,0],[0,1,1,1]],
@@ -62,7 +62,7 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1]}){
 
   const [hyper_points, setHyper_Points] = useState(origin.current)
   useFrame((state) => {
-    const angle = 0.1 * state.clock.getElapsedTime()
+    const angle = rt.current * 0.1 * state.clock.getElapsedTime()
     setHyper_Points(origin.current.map((layer) =>
       layer.map((point) => {
         const [x, y, z, w] = point
@@ -82,7 +82,7 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1]}){
   const mappedPoints = map3(hyper_points).flat().map((rw) => {return rw.map((n, index) => {return n * sv[index]})})
   return <group>
   {mappedPoints.map((coords: any, index:any, arr:any) => (
-    <Point key={index} position={coords} size={Math.sqrt(1) / 25} color={`rgb(${Math.round((arr.length - index) / arr.length * 255) * (index % 2)}, ${Math.round(index / arr.length * 255)}, ${Math.round((arr.length - index) / arr.length * 255) * ((index + 1) % 2)})`}/>
+    <Point key={index} position={coords} size={0.5} color={`rgb(${Math.round((arr.length - index) / arr.length * 255) * (index % 2)}, ${Math.round(index / arr.length * 255)}, ${Math.round((arr.length - index) / arr.length * 255) * ((index + 1) % 2)})`}/>
   ))}
   <Line start={mappedPoints[0]} end={mappedPoints[1]}/>
   <Line start={mappedPoints[0]} end={mappedPoints[2]}/>
@@ -117,9 +117,34 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1]}){
   <Line start={mappedPoints[9]} end={mappedPoints[13]}/>
   <Line start={mappedPoints[11]} end={mappedPoints[3]}/>
 
-  <QHtml points={[mappedPoints[0], mappedPoints[4], mappedPoints[12], mappedPoints[8]]}>
-      <div style={{ width: "100%", height: "100%", background: "white", padding: "20px" }}>
-        <p>Hello World</p>
+  <QHtml points={[mappedPoints[0], mappedPoints[4], mappedPoints[12], mappedPoints[8]]} rt={rt}>
+      <div style={{ width: "100%", height: "100%", background: "red", padding: "50px", color: "white", borderRadius: "75px"}}>
+        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      </div>
+    </QHtml>
+    <QHtml points={[mappedPoints[9], mappedPoints[13], mappedPoints[5], mappedPoints[1]]} rt={rt}>
+      <div style={{ width: "100%", height: "100%", background: "blue", padding: "50px", color: "white", borderRadius: "75px"}}>
+        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      </div>
+    </QHtml>
+    <QHtml points={[mappedPoints[12], mappedPoints[13], mappedPoints[5], mappedPoints[4]]} rt={rt}>
+      <div style={{ width: "100%", height: "100%", background: "green", padding: "50px", color: "white", borderRadius: "75px"}}>
+        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      </div>
+    </QHtml>
+    <QHtml points={[mappedPoints[9], mappedPoints[8], mappedPoints[0], mappedPoints[1]]} rt={rt}>
+      <div style={{ width: "100%", height: "100%", background: "cyan", padding: "50px", color: "white", borderRadius: "75px"}}>
+        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      </div>
+    </QHtml>
+    <QHtml points={[mappedPoints[9], mappedPoints[8], mappedPoints[12], mappedPoints[13]]} rt={rt}>
+      <div style={{ width: "100%", height: "100%", background: "yellow", padding: "50px", color: "white", borderRadius: "75px"}}>
+        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      </div>
+    </QHtml>
+    <QHtml points={[mappedPoints[4], mappedPoints[0], mappedPoints[1], mappedPoints[5]]} rt={rt}>
+      <div style={{ width: "100%", height: "100%", background: "orange", padding: "50px", color: "white", borderRadius: "75px"}}>
+        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
       </div>
     </QHtml>
   </group>
@@ -161,19 +186,81 @@ function FrameLimit({ fps = 30 }) {
   return null
 }
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    window.location.reload()
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <script>window.location.reload()</script>
+    }
+
+    return this.props.children;
+  }
+}
+
 function App() {
+  
+  const canvasRef = useRef()
+
+
+  useEffect(() => {
+    const handleContextLost = (event) => {
+      event.preventDefault()
+      console.log("WebGL context lost, reloading the page.")
+      window.location.reload()
+    }
+
+    const canvas = canvasRef.current
+    if (canvas) {
+      const gl = canvas.getContext('webgl2')
+      if (!gl) {
+        console.error("WebGL2 context not available, falling back to WebGL1.")
+      } else {
+        console.log("WebGL2 context created successfully.")
+      }
+
+      canvas.addEventListener('webglcontextlost', handleContextLost)
+    }
+
+    return () => {
+      const canvas = canvasRef.current
+      if (canvas) {
+        canvas.removeEventListener('webglcontextlost', handleContextLost)
+      }
+    }
+  }, [])
+
+  const rt = useRef(0)
   
   return (
     <div className="w-full h-screen">
-      <p className="absolute z-50 bg-neutral-300 md">This is a hypercube!<br /> Chris2Rich: <a className="text-blue-500 underline" href="https://github.com/chris2rich">Github</a></p>
+      <div className="absolute top-2 left-1/2 z-50 p-2 text-center rounded-xl -translate-x-1/2 bg-neutral-300">
+      <p className="md">This is a hypercube!<br /> Chris2Rich: <a className="text-blue-500 underline" href="https://github.com/chris2rich">Github</a><br /></p>
+      <button className="p-2 text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl transition-all hover:text-yellow-400 hover:scale-105" onClick={() => {rt.current = (rt.current == 0)}}>Toggle Rotation</button>
+      </div>
       <Suspense>
-      <Canvas camera={{ position: [3, 3, 3], fov: 75 }} style={{ background: "#212121" }} frameloop={"demand"}>
+        <ErrorBoundary>
+        <Canvas camera={{ position: [3, 3, 3], fov: 75 }} style={{ background: "#212121" }} frameloop={"demand"} ref={canvasRef}>
         <FrameLimit fps={30} />
         <CameraController />
         <ambientLight intensity={0.25} />
         <pointLight position={[10, 10, 10]} />
-        <HyperCube sv={[10,10,10]} position={[.5,.5,.5]}/>
-      </Canvas>
+        <HyperCube sv={[25,25,25]} position={[.5,.5,.5]} rt={rt}/>
+        </Canvas>
+      </ErrorBoundary>
       </Suspense>
     </div>
   )

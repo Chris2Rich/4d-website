@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import * as THREE from "three"
 
-export default function QHtml({ points, children }) {
+export default function QHtml({ points, rt, children }) {
   const groupRef = useRef()
   const htmlRef = useRef()
   const [euler, setEuler] = useState(new THREE.Euler())
@@ -44,7 +44,7 @@ export default function QHtml({ points, children }) {
       rotationMatrix.decompose(position, t_euler, scale)
       setEuler(t_euler)
 
-      setScale(Math.pow(1 * Math.max(Math.cos(0.2 * state.clock.getElapsedTime()), 0), 2))
+      setScale((!rt.current * 1) + (rt.current * Math.sin(0.05 * state.clock.getElapsedTime())))
     }
   })
 
@@ -64,8 +64,8 @@ export default function QHtml({ points, children }) {
           rotation={euler}
           scale={scale}
           style={{
-            width: "400px",
-            height: "400px",
+            width: "1000px",
+            height: "1000px",
             transformOrigin: "center center",
             pointerEvents: "auto",
           }}
