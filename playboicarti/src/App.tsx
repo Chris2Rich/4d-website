@@ -61,8 +61,8 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1]}){
   ].map(i => i.map(rw => rw.map(n => n - 0.5))))
 
   const [hyper_points, setHyper_Points] = useState(origin.current)
-  useFrame((state, delta) => {
-    const angle = 0.0 * state.clock.getElapsedTime()
+  useFrame((state) => {
+    const angle = 0.1 * state.clock.getElapsedTime()
     setHyper_Points(origin.current.map((layer) =>
       layer.map((point) => {
         const [x, y, z, w] = point
@@ -165,7 +165,7 @@ function App() {
   
   return (
     <div className="w-full h-screen">
-      <p className="absolute z-50 bg-neutral-300 md">This is a hypercube! <a href="https://github.com/chris2rich">Github</a></p>
+      <p className="absolute z-50 bg-neutral-300 md">This is a hypercube!<br /> Chris2Rich: <a className="text-blue-500 underline" href="https://github.com/chris2rich">Github</a></p>
       <Suspense>
       <Canvas camera={{ position: [3, 3, 3], fov: 75 }} style={{ background: "#212121" }} frameloop={"demand"}>
         <FrameLimit fps={30} />
