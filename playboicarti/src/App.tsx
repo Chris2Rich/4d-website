@@ -1,5 +1,5 @@
-import { Canvas, useThree, useFrame, addEffect } from "@react-three/fiber"
-import React, { useEffect, useRef, useState, Suspense } from "react"
+import { Canvas, useThree, useFrame } from "@react-three/fiber"
+import React, { useEffect, useRef, useState, Suspense, useLayoutEffect } from "react"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/Addons.js"
 import QHtml from "./QHtml"
@@ -147,6 +147,16 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1], rt}){
         <p style={{fontSize: "150px"}}>This is a hypercube!</p>
       </div>
     </QHtml>
+    <QHtml points={[mappedPoints[6], mappedPoints[4], mappedPoints[0], mappedPoints[2]]} rt={rt}>
+      <div style={{ width: "100%", height: "100%", background: "magenta", padding: "50px", color: "white", borderRadius: "75px"}}>
+        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      </div>
+    </QHtml>
+    <QHtml points={[mappedPoints[7], mappedPoints[3], mappedPoints[1], mappedPoints[5]]} rt={rt}>
+      <div style={{ width: "100%", height: "100%", background: "black", padding: "50px", color: "white", borderRadius: "75px"}}>
+        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      </div>
+    </QHtml>
   </group>
 }
 
@@ -167,23 +177,39 @@ function CameraController() {
   return null
 }
 
-function FrameLimit({ fps = 30 }) {
+function FPSLimiter({ fps }) {
+  const set = useThree((state) => state.set);
+  const get = useThree((state) => state.get);
+  const advance = useThree((state) => state.advance);
+  const frameloop = useThree((state) => state.frameloop);
+
+  useLayoutEffect(() => {
+      const initFrameloop = get().frameloop;
+
+      return () => {
+          set({ frameloop: initFrameloop });
+      };
+  }, []);
+
+  useFrame((state) => {
+      if (state.get().blocked) return;
+      state.set({ blocked: true });
+
+      setTimeout(() => {
+          state.set({ blocked: false });
+
+          state.advance();
+      }, Math.max(0, 1000 / fps - state.clock.getDelta()));
+  });
+
   useEffect(() => {
-    const interval = 1000 / fps
-    let then = performance.now()
-    
-    const unsubscribe = addEffect(() => {
-      const now = performance.now()
-      const delta = now - then
-      if (delta < interval) return false
-      then = now - (delta % interval)
-      return true
-    })
-    
-    return () => unsubscribe()
-  }, [fps])
-  
-  return null
+      if (frameloop !== 'never') {
+          set({ frameloop: 'never' });
+          advance();
+      }
+  }, [frameloop]);
+
+  return null;
 }
 
 class ErrorBoundary extends React.Component {
@@ -220,7 +246,7 @@ function App() {
     const handleContextLost = (event) => {
       event.preventDefault()
       console.log("WebGL context lost, reloading the page.")
-      window.location.reload()
+      throw("error")
     }
 
     const canvas = canvasRef.current
@@ -251,10 +277,11 @@ function App() {
       <p className="md">This is a hypercube!<br /> Chris2Rich: <a className="text-blue-500 underline" href="https://github.com/chris2rich">Github</a><br /></p>
       <button className="p-2 text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl transition-all hover:text-yellow-400 hover:scale-105" onClick={() => {rt.current = (rt.current == 0)}}>Toggle Rotation</button>
       </div>
+      <div className="absolute bottom-2 left-1/2 z-50 p-2 text-center rounded-xl -translate-x-1/2 bg-neutral-300"><p className="md">Left Mouse: Rotate Camera<br /> Right Mouse: Move Camera</p></div>
       <Suspense>
         <ErrorBoundary>
         <Canvas camera={{ position: [3, 3, 3], fov: 75 }} style={{ background: "#212121" }} frameloop={"demand"} ref={canvasRef}>
-        <FrameLimit fps={30} />
+        <FPSLimiter fps={30} />
         <CameraController />
         <ambientLight intensity={0.25} />
         <pointLight position={[10, 10, 10]} />
