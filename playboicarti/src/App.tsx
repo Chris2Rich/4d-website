@@ -414,6 +414,7 @@ function App() {
 
   const rt = useRef(0)
   const display = useRef(1)
+  const [framerate, setframerate] = useState(30)
   
   return (
     <div className="w-full h-screen">
@@ -422,12 +423,17 @@ function App() {
       </div>
       <div className="flex absolute bottom-2 left-1/2 z-50 items-center p-2 text-center rounded-xl drop-shadow-lg -translate-x-1/2 bg-neutral-300 shadow-black"><div><p className="md">Left Mouse: Rotate Camera<br /> Right Mouse: Move Camera</p></div>
 <div className="ml-4">      <button className="p-2 mt-1 text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl drop-shadow-md transition-all hover:text-yellow-400 hover:scale-105 shadow-indigo-500" onClick={() => {rt.current = (rt.current == 0)}}>Toggle Rotation</button><br />
-<button className="p-2 mt-1 text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl drop-shadow-md transition-all shadow-indigo-500 hover:text-yellow-400 hover:scale-105" onClick={() => {display.current = (display.current == 0)}}>Toggle Panels</button></div>
+<button className="p-2 mt-1 text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl drop-shadow-md transition-all shadow-indigo-500 hover:text-yellow-400 hover:scale-105" onClick={() => {display.current = (display.current == 0)}}>Toggle Panels</button>
+</div>
+      </div>
+      <div className="flex absolute bottom-2 left-1/2 z-50 items-center p-2 text-center rounded-xl drop-shadow-lg translate-x-48 bg-neutral-300 shadow-black">
+        <p>Current FPS: {60 - framerate}</p>
+        <input type={"range"} min={0} max={59} step={1} onChange={(e) => {setframerate(e.target.value)}} className="accent-indigo-500 hover:accent-indigo-700"></input>
       </div>
       <Suspense>
         <ErrorBoundary>
         <Canvas camera={{ position: [3, 3, 3], fov: 75 }} style={{ background: "#212121" }} frameloop={"demand"} ref={canvasRef}>
-        <FPSLimiter fps={30} />
+        <FPSLimiter fps={framerate} />
         <CameraController />
         <ambientLight intensity={0.25} />
         <pointLight position={[0, 35, 0]} />
@@ -438,6 +444,5 @@ function App() {
     </div>
   )
 }
-
 
 export default App
