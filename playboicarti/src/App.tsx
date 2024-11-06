@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Canvas, useThree, useFrame } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import React, { useEffect, useMemo, useRef, useState, Suspense, useLayoutEffect } from "react"
@@ -149,7 +150,7 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1], rt, display}){
     </QHtml>
     <QHtml points={[mappedPoints[6], mappedPoints[4], mappedPoints[0], mappedPoints[2]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "magenta", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>C/++, PY, JS, Go</p>
+        <p style={{fontSize: "150px"}}>Languages: C/++, PY, JS, Go</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[7], mappedPoints[3], mappedPoints[1], mappedPoints[5]]} rt={rt} display={display}>
@@ -164,22 +165,22 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1], rt, display}){
     </QHtml>
     <QHtml points={[mappedPoints[4], mappedPoints[6], mappedPoints[7], mappedPoints[5]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "turquoise", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+        <p style={{fontSize: "150px"}}>A Levels: Ma, FM, Phys, CS</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[6], mappedPoints[7], mappedPoints[3], mappedPoints[2]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "grey", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+        <p style={{fontSize: "150px"}}>XMR 🚀🚀</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[10], mappedPoints[14], mappedPoints[6], mappedPoints[2]]} rt={rt} display={display}>
-      <div style={{ width: "100%", height: "100%", background: "#D3A1D3", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      <div style={{ width: "100%", height: "100%", background: "#D000F", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
+        <a href={"https://gitlab.com/chris2rich"}><img style={{width: "1000px", height: "1000px"}} src={"https://www.vectorlogo.zone/logos/gitlab/gitlab-tile.svg"}></img></a>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[3], mappedPoints[7], mappedPoints[15], mappedPoints[11]]} rt={rt} display={display}>
-      <div style={{ width: "100%", height: "100%", background: "#FF0DA3", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      <div style={{ width: "100%", height: "100%", background: "#414141", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
+        <a href={"https://leetcode.com/u/c2rdev/"}><img style={{width: "1000px", height: "1000px"}} src={"https://upload.wikimedia.org/wikipedia/commons/8/8e/LeetCode_Logo_1.png"}></img></a>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[6], mappedPoints[7], mappedPoints[15], mappedPoints[14]]} rt={rt} display={display}>
@@ -419,7 +420,7 @@ function App() {
   return (
     <div className="w-full h-screen">
       <div className="absolute top-2 left-1/2 z-50 p-2 text-center rounded-xl drop-shadow-lg -translate-x-1/2 bg-neutral-300 shadow-black">
-      <p className="md">This is a hypercube!<br /> Chris2Rich: <a className="text-blue-500 underline" href="https://github.com/chris2rich">Github</a></p>
+      <p className="md">This is a hypercube!<br />Some faces are clickable links.<br /> Chris2Rich: <a className="text-blue-500 underline" href="https://github.com/chris2rich">Github</a></p>
       </div>
       <div className="flex absolute bottom-2 left-1/2 z-50 items-center p-2 text-center rounded-xl drop-shadow-lg -translate-x-1/2 bg-neutral-300 shadow-black"><div><p className="md">Left Mouse: Rotate Camera<br /> Right Mouse: Move Camera</p></div>
 <div className="ml-4">      <button className="p-2 mt-1 text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl drop-shadow-md transition-all hover:text-yellow-400 hover:scale-105 shadow-indigo-500" onClick={() => {rt.current = (rt.current == 0)}}>Toggle Rotation</button><br />
