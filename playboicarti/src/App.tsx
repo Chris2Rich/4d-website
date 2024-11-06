@@ -184,48 +184,48 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1], rt, display}){
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[6], mappedPoints[7], mappedPoints[15], mappedPoints[14]]} rt={rt} display={display}>
-      <div style={{ width: "100%", height: "100%", background: "salmon", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      <div style={{ width: "100%", height: "100%", background: "indigo", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
+        <a href={"https://moneyviz.vercel.app/"} style={{fontSize: "150px"}}>Cloud Data Manipulation (indev)</a>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[3], mappedPoints[2], mappedPoints[10], mappedPoints[11]]} rt={rt} display={display}>
-      <div style={{ width: "100%", height: "100%", background: "purple", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      <div style={{ width: "100%", height: "100%", background: "salmon", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
+        <p style={{fontSize: "150px"}}>Dev OS: Debian 12</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[15], mappedPoints[14], mappedPoints[10], mappedPoints[11]]} rt={rt} display={display}>
-      <div style={{ width: "100%", height: "100%", background: "olive", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+      <div className="bg-gradient-to-b from-blue-500 to-purple-500  text-white drop-shadow-md shadow-indigo-500" style={{ width: "100%", height: "100%", padding: "50px", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}> 
+        <a href={"/"} style={{fontSize: "150px"}}>Hypercube Portfolio Page</a>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[10], mappedPoints[8], mappedPoints[12], mappedPoints[14]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "navy", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+        <p style={{fontSize: "150px"}}>TBA</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[15], mappedPoints[13], mappedPoints[9], mappedPoints[11]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "papayawhip", padding: "50px", color: "black", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+        <p style={{fontSize: "150px"}}>TBA</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[14], mappedPoints[12], mappedPoints[13], mappedPoints[15]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "crimson", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+        <p style={{fontSize: "150px"}}>TBA</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[11], mappedPoints[9], mappedPoints[8], mappedPoints[10]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "darkslateblue", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+        <p style={{fontSize: "150px"}}>TBA</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[5], mappedPoints[13], mappedPoints[15], mappedPoints[7]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "seagreen", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+        <p style={{fontSize: "150px"}}>TBA</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[9], mappedPoints[1], mappedPoints[3], mappedPoints[11]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "lightskyblue", padding: "50px", color: "black", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>This is a hypercube!</p>
+        <p style={{fontSize: "150px"}}>TBA</p>
       </div>
     </QHtml>
   </group>
@@ -297,6 +297,7 @@ function QHtml({ points, rt, display, children }) {
             transformOrigin: "center center",
             pointerEvents: "auto",
           }}
+          className="transition-all duration-200 hover:scale-110 hover:filter blur-lg hover:blur-none"
         >
           {children}
         </Html>
