@@ -50,7 +50,7 @@ function Line({ start, end, color="#0FF" }) {
   const geometry = new THREE.BufferGeometry().setFromPoints(points)
   const material = new THREE.LineBasicMaterial({ color: color }) 
 
-  return <line geometry={geometry} material={material} />
+  return <line geometry={geometry} material={material}/>
 }
 
 function HyperCube({ position = [0,0,0], sv = [1,1,1], rt, display}){
@@ -200,32 +200,36 @@ function HyperCube({ position = [0,0,0], sv = [1,1,1], rt, display}){
     </QHtml>
     <QHtml points={[mappedPoints[10], mappedPoints[8], mappedPoints[12], mappedPoints[14]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "navy", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>TBA</p>
+      <img style={{width: "1000px", height: "1000px"}} src={"https://upload.wikimedia.org/wikipedia/commons/8/8d/Christian_Cross_icon.svg"}></img>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[15], mappedPoints[13], mappedPoints[9], mappedPoints[11]]} rt={rt} display={display}>
-      <div style={{ width: "100%", height: "100%", background: "papayawhip", padding: "50px", color: "black", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>TBA</p>
+      <div style={{ width: "100%", height: "100%", background: "papayawhip", padding: "50px", color: "black", borderRadius: "75px", alignItems: "center", textAlign: "center", overflow: "scroll", scrollbarWidth: "none"}}>
+        <p style={{fontSize: "150px"}}>This is html inside a panel!</p>
+        <button style={{fontSize: "45px"}} className="p-2 mt-1 text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl drop-shadow-md transition-all hover:text-yellow-400 hover:scale-105 shadow-indigo-500">Click me?</button>
+        <p style={{fontSize: "45px"}}>if you wish then you can scroll but you will see lorem ipsum after a while. i dont know about how im going to keep slelling porperl y but fi uoy kan stull reed ths than u lan dpwak z resl lanfuahe. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis congue sagittis enim, eget iaculis orci euismod vel. Quisque id neque sed libero pellentesque commodo. Maecenas ultricies tellus magna, vel malesuada erat dapibus at. Donec tincidunt quam sed risus dictum convallis. Mauris sit amet turpis dolor. Nullam fringilla bibendum dui pretium dictum. Nullam porttitor semper felis, et aliquam ex suscipit quis. Cras in velit consectetur, finibus leo sit amet, consectetur enim. Aenean consequat justo sed est dignissim hendrerit hendrerit sed mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer quis molestie nibh. Donec nibh dolor, interdum eu metus nec, gravida facilisis nulla. Cras quis auctor metus, a elementum orci. Aliquam quis venenatis turpis. Nulla varius fringilla rhoncus. Nunc sapien mauris, imperdiet commodo tellus et, molestie egestas nunc. In eu magna maximus, mollis enim in, facilisis quam. Nulla faucibus posuere molestie. Morbi ornare fermentum odio vel vulputate. Vivamus cursus egestas sapien ac maximus. Sed at aliquet est. Praesent tincidunt orci ex, vitae condimentum libero feugiat nec. Quisque lobortis sem augue, sit amet congue justo condimentum sed. Mauris placerat porttitor velit, nec sollicitudin nisl ornare vitae. Ut dapibus orci ut elit pretium tristique. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam ac orci suscipit, porta nunc eu, commodo sem. Proin varius id diam sit amet egestas. Phasellus tempus aliquam ipsum, at malesuada massa accumsan vel. Curabitur id mollis eros. Nullam tellus velit, luctus eget malesuada ac, mollis vitae libero. Quisque in dui elementum, gravida neque et, luctus nulla. In at justo aliquam, ullamcorper ipsum non, blandit nisl.</p>
+        <iframe width="100%" height="66%" src="https://www.youtube.com/watch?v=O6pzSeQlSbY" />
+        <p style={{fontSize: "45px"}}>Dream car ^^^</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[14], mappedPoints[12], mappedPoints[13], mappedPoints[15]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "crimson", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>TBA</p>
+        <a style={{fontSize: "150px"}} href={"mailto:cz07business:gmail.com"}>Email Me!</a>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[11], mappedPoints[9], mappedPoints[8], mappedPoints[10]]} rt={rt} display={display}>
-      <div style={{ width: "100%", height: "100%", background: "darkslateblue", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>TBA</p>
+      <div style={{ width: "100%", height: "100%", background: "#D000F", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
+      <a href={"https://tba.tba/"}><img style={{width: "1000px", height: "1000px"}} src={"https://store-images.s-microsoft.com/image/apps.31120.9007199266245564.44dc7699-748d-4c34-ba5e-d04eb48f7960.bc4172bd-63f0-455a-9acd-5457f44e4473"}></img></a>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[5], mappedPoints[13], mappedPoints[15], mappedPoints[7]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "seagreen", padding: "50px", color: "white", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>TBA</p>
+        <p style={{fontSize: "150px"}}>Fluent in: English, French</p>
       </div>
     </QHtml>
     <QHtml points={[mappedPoints[9], mappedPoints[1], mappedPoints[3], mappedPoints[11]]} rt={rt} display={display}>
       <div style={{ width: "100%", height: "100%", background: "lightskyblue", padding: "50px", color: "black", borderRadius: "75px", display: "flex", alignItems: "center", textAlign: "center"}}>
-        <p style={{fontSize: "150px"}}>TBA</p>
+        <p style={{fontSize: "150px"}}>Target Uni: Cambridge CS</p>
       </div>
     </QHtml>
   </group>
@@ -437,8 +441,7 @@ function App() {
         <Canvas camera={{ position: [3, 3, 3], fov: 75 }} style={{ background: "#212121" }} frameloop={"demand"} ref={canvasRef}>
         <FPSLimiter fps={framerate} />
         <CameraController />
-        <ambientLight intensity={0.25} />
-        <pointLight position={[0, 35, 0]} />
+        <ambientLight intensity={1} />
         <HyperCube sv={[25,25,25]} position={[.5,.5,.5]} rt={rt} display={display}/>
         </Canvas>
       </ErrorBoundary>
