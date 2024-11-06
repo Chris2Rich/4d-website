@@ -418,7 +418,7 @@ function App() {
     }
   }, [])
 
-  const rt = useRef(0)
+  const rt = useRef(1)
   const display = useRef(1)
   const [framerate, setframerate] = useState(30)
   
