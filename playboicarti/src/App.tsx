@@ -433,7 +433,7 @@ function App() {
 </div>
       </div>
       <div className="flex absolute bottom-2 left-1/2 z-50 items-center p-2 text-center rounded-xl drop-shadow-lg translate-x-48 bg-neutral-300 shadow-black">
-        <p>Current FPS: {60 - framerate}</p>
+        <p>Current FPS: {framerate}</p>
         <input type={"range"} min={0} max={59} step={1} onChange={(e) => {setframerate(e.target.value)}} className="accent-indigo-500 hover:accent-indigo-700"></input>
       </div>
         <ErrorBoundary>
